@@ -1,0 +1,96 @@
+import React from 'react';
+import { Dimensions, FlatList, Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+
+const courses = [
+  { "id": 1, "name": "Budgeting", "desc": "Capture The Present", "image": { "uri": "https://res.cloudinary.com/glide/image/fetch/f_auto,w_500,c_limit/https%3A%2F%2Fjcsbalt.org%2Fwp-content%2Fuploads%2F2022%2F02%2FBlog-cover-images-33-e1644520710429.png" } },
+  { "id": 2, "name": "Saving", "desc": "Protect Your Future", "image": { "uri": "https://res.cloudinary.com/glide/image/fetch/f_auto,w_500,c_limit/https%3A%2F%2Fst2.depositphotos.com%2F3390741%2F5560%2Fv%2F950%2Fdepositphotos_55601123-stock-illustration-cartoon-cute-piggy-bank-with.jpg" } },
+  { "id": 3, "name": "Investing", "desc": "Expand Your Future", "image": { "uri": "https://res.cloudinary.com/glide/image/fetch/f_auto,w_500,c_limit/https%3A%2F%2Fwww.investopedia.com%2Fthmb%2FejYdlrujyl33H3iRRvZrU2huOXs%3D%2F4200x2797%2Ffilters%3Ano_upscale()%3Amax_bytes(150000)%3Astrip_icc()%2F4243163-v1-05dfe20436f042999666243640fd84cd.png" } },
+  { "id": 4, "name": "Money", "desc": "Mo' Money, Mo' Problems, Foo", "image": { "uri": "https://www.google.com/imgres?imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fc%2Fc1%2FDollar_bill_and_small_change.jpg&tbnid=87ejg4PG9GsmmM&vet=12ahUKEwiZv5Dd6sP-AhU-Kt4AHQQJD9oQMygAegUIARDsAQ..i&imgrefurl=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FMoney&docid=uVHLjbcJyz4P6M&w=3808&h=2744&q=money&ved=2ahUKEwiZv5Dd6sP-AhU-Kt4AHQQJD9oQMygAegUIARDsAQ" } },
+];
+
+type CourseProps = {
+  name: string,
+  desc: string,
+  uri: string,
+};
+
+class Course extends React.Component<CourseProps> {
+  render() {
+    return (
+      <View style={styles.courseView}>
+        <Image style={styles.courseImage} source={{ "uri": this.props.uri }} />
+        <Text style={styles.courseImageName}>{this.props.name}</Text>
+        <Text style={styles.courseImageDesc}>{this.props.desc}</Text>
+      </View>
+    );
+  }
+}
+
+class CoursesScreen extends React.Component {
+  render() {
+    return (
+      <>
+        <FlatList
+          data={courses}
+          renderItem={({ item }) =>
+            <Course
+              name={item.name}
+              desc={item.desc}
+              uri={item.image.uri} />
+          }
+          contentContainerStyle={styles.coursesView}
+          keyExtractor={item => item.id}
+        />
+      </>
+    );
+  }
+  /*
+  render() {
+    return (
+      <>
+        <FlatList
+          data={courses}
+          renderItem={({ item }) =>
+            <Course
+              name={item.name}
+              desc={item.desc}
+              uri={item.image.uri} />
+          }
+          contentContainerStyle={styles.coursesView}
+          keyExtractor={item => item.id}
+        />
+      </>
+    );
+  }
+  */
+}
+
+const styles = StyleSheet.create({
+  coursesView: {
+    flex: 1,
+    //justifyContent: "space-evenly",
+    //flexWrap: "wrap",
+    flexDirection: "row",
+  },
+  courseView: {
+    width: windowWidth * 3 / 10,
+    height: windowWidth * 4 / 10,
+  },
+  courseImage: {
+    width: windowWidth * 3 / 10,
+    height: windowWidth * 3 / 10,
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  courseImageName: {
+    fontWeight: "bold",
+  },
+  courseImageDesc: {
+    color: "#808080",
+  },
+});
+
+export default CoursesScreen;
